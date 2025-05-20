@@ -3,6 +3,8 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -26,4 +28,8 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
-          branch: gh-pages 
+          branch: gh-pages
+          # Using the default GITHUB_TOKEN with the permissions block above
+          # You can also use a PAT if needed: token: ${{ secrets.GITHUB_TOKEN }}
+          clean: true  # Clean up existing files
+          force: true  # Force push
