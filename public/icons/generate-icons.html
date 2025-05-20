@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate App Icons</title>
+    <style>
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="icons"></div>
+    <script>
+        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
+        const container = document.getElementById('icons');
+
+        sizes.forEach(size => {
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+
+            // Draw background
+            ctx.fillStyle = '#1976d2';
+            ctx.fillRect(0, 0, size, size);
+
+            // Draw timer circle
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = size * 0.1;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, size * 0.35, 0, Math.PI * 2);
+            ctx.stroke();
+
+            // Draw timer hand
+            ctx.beginPath();
+            ctx.moveTo(size/2, size/2);
+            ctx.lineTo(size/2, size * 0.2);
+            ctx.stroke();
+
+            container.appendChild(canvas);
+
+            // Create download link
+            const link = document.createElement('a');
+            link.download = `icon-${size}x${size}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.textContent = `Download ${size}x${size}`;
+            container.appendChild(link);
+            container.appendChild(document.createElement('br'));
+        });
+    </script>
+</body>
+</html> 
