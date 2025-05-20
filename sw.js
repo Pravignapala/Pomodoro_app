@@ -22,13 +22,20 @@ self.addEventListener('install', event => {
         console.log('Opened cache');
         return cache.addAll(urlsToCache);
       })
+      .catch(error => {
+        console.error('Cache installation failed:', error);
+      })
   );
 });
 
 self.addEventListener('fetch', event => {
-  // Only handle http(s) requests
-  if (!event.request.url.startsWith('http')) return;
-  
+  // Skip non-GET requests
+  if (event.request.method !== 'GET') return;
+
+  // Skip non-HTTP(S) requests
+  const url = new URL(event.request.url);
+  if (!url.protocol.startsWith('http')) return;
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -40,32 +47,36 @@ self.addEventListener('fetch', event => {
         // Clone the request
         const fetchRequest = event.request.clone();
 
-        return fetch(fetchRequest).then(response => {
-          // Check if we received a valid response
-          if (!response || response.status !== 200 || response.type !== 'basic') {
+        return fetch(fetchRequest)
+          .then(response => {
+            // Check if we received a valid response
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clone the response
+            const responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(cache => {
+                cache.put(event.request, responseToCache);
+              })
+              .catch(error => {
+                console.error('Cache update failed:', error);
+              });
+
             return response;
-          }
-
-          // Clone the response
-          const responseToCache = response.clone();
-
-          caches.open(CACHE_NAME)
-            .then(cache => {
-              cache.put(event.request, responseToCache);
-            });
-
-          return response;
-        });
-      })
-      .catch(error => {
-        console.error('Fetch failed:', error);
-        // You could return a custom offline page here
-        return new Response('Network error occurred', {
-          status: 408,
-          headers: new Headers({
-            'Content-Type': 'text/plain'
           })
-        });
+          .catch(error => {
+            console.error('Fetch failed:', error);
+            // You could return a custom offline page here
+            return new Response('Network error occurred', {
+              status: 408,
+              headers: new Headers({
+                'Content-Type': 'text/plain'
+              })
+            });
+          });
       })
   );
 });

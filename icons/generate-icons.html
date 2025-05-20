@@ -1,52 +1,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Generate App Icons</title>
-    <style>
-        canvas {
-            border: 1px solid #ccc;
-            margin: 10px;
-        }
-    </style>
+    <title>Generate Icons</title>
 </head>
 <body>
-    <div id="icons"></div>
+    <canvas id="canvas" width="512" height="512" style="display:none;"></canvas>
     <script>
-        const sizes = [72, 96, 128, 144, 152, 192, 384, 512];
-        const container = document.getElementById('icons');
-
-        sizes.forEach(size => {
-            const canvas = document.createElement('canvas');
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Draw a simple timer icon
+        function drawIcon(size) {
             canvas.width = size;
             canvas.height = size;
-            const ctx = canvas.getContext('2d');
-
-            // Draw background
-            ctx.fillStyle = '#1976d2';
-            ctx.fillRect(0, 0, size, size);
-
-            // Draw timer circle
-            ctx.strokeStyle = '#ffffff';
-            ctx.lineWidth = size * 0.1;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Draw circle
             ctx.beginPath();
-            ctx.arc(size/2, size/2, size * 0.35, 0, Math.PI * 2);
+            ctx.arc(size/2, size/2, size/2 - 10, 0, Math.PI * 2);
+            ctx.strokeStyle = '#1976d2';
+            ctx.lineWidth = size/20;
             ctx.stroke();
-
-            // Draw timer hand
+            
+            // Draw hands
             ctx.beginPath();
             ctx.moveTo(size/2, size/2);
-            ctx.lineTo(size/2, size * 0.2);
+            ctx.lineTo(size/2, size/4);
+            ctx.strokeStyle = '#1976d2';
+            ctx.lineWidth = size/30;
             ctx.stroke();
-
-            container.appendChild(canvas);
-
-            // Create download link
+            
+            ctx.beginPath();
+            ctx.moveTo(size/2, size/2);
+            ctx.lineTo(size*3/4, size/2);
+            ctx.strokeStyle = '#1976d2';
+            ctx.lineWidth = size/40;
+            ctx.stroke();
+        }
+        
+        // Generate icons
+        const sizes = [192, 512];
+        sizes.forEach(size => {
+            drawIcon(size);
             const link = document.createElement('a');
             link.download = `icon-${size}x${size}.png`;
             link.href = canvas.toDataURL('image/png');
-            link.textContent = `Download ${size}x${size}`;
-            container.appendChild(link);
-            container.appendChild(document.createElement('br'));
+            link.click();
         });
     </script>
 </body>
