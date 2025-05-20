@@ -1,18 +1,18 @@
 const CACHE_NAME = 'pomodoro-app-v1';
 const urlsToCache = [
-  '/pomodoro-app/',
-  '/pomodoro-app/index.html',
-  '/pomodoro-app/manifest.json',
-  '/pomodoro-app/sounds/bell.mp3',
-  '/pomodoro-app/sounds/chime.mp3',
-  '/pomodoro-app/icons/icon-72x72.png',
-  '/pomodoro-app/icons/icon-96x96.png',
-  '/pomodoro-app/icons/icon-128x128.png',
-  '/pomodoro-app/icons/icon-144x144.png',
-  '/pomodoro-app/icons/icon-152x152.png',
-  '/pomodoro-app/icons/icon-192x192.png',
-  '/pomodoro-app/icons/icon-384x384.png',
-  '/pomodoro-app/icons/icon-512x512.png'
+  '/Pomodoro_app/',
+  '/Pomodoro_app/index.html',
+  '/Pomodoro_app/manifest.json',
+  '/Pomodoro_app/sounds/bell.mp3',
+  '/Pomodoro_app/sounds/chime.mp3',
+  '/Pomodoro_app/icons/icon-72x72.png',
+  '/Pomodoro_app/icons/icon-96x96.png',
+  '/Pomodoro_app/icons/icon-128x128.png',
+  '/Pomodoro_app/icons/icon-144x144.png',
+  '/Pomodoro_app/icons/icon-152x152.png',
+  '/Pomodoro_app/icons/icon-192x192.png',
+  '/Pomodoro_app/icons/icon-384x384.png',
+  '/Pomodoro_app/icons/icon-512x512.png'
 ];
 
 self.addEventListener('install', event => {
