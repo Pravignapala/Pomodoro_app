@@ -2,21 +2,37 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/Pomodoro_app/icons/icon-192x192.png" />
+    <link rel="icon" type="image/png" href="./icons/icon-192x192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1976d2" />
     <meta name="description" content="A modern Pomodoro Timer app for productivity" />
-    <link rel="apple-touch-icon" href="/Pomodoro_app/icons/icon-192x192.png" />
-    <link rel="manifest" href="/Pomodoro_app/manifest.json" />
+    <link rel="apple-touch-icon" href="./icons/icon-192x192.png" />
+    <link rel="manifest" href="./manifest.json" />
     <title>Pomodoro Timer</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="./src/main.tsx"></script>
     <script>
+      // Error handling for debugging
+      window.addEventListener('error', function(e) {
+        console.log('Global error handler:', e.message, e.filename);
+        
+        // Display error on page for debugging
+        const errorDiv = document.createElement('div');
+        errorDiv.style.backgroundColor = 'red';
+        errorDiv.style.color = 'white';
+        errorDiv.style.padding = '10px';
+        errorDiv.textContent = `Error: ${e.message} in ${e.filename}`;
+        document.body.prepend(errorDiv);
+      });
+
+      // Service Worker registration
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/Pomodoro_app/sw.js')
+          navigator.serviceWorker.register('./sw.js', {
+            scope: '/Pomodoro_app/'
+          })
             .then(registration => {
               console.log('ServiceWorker registration successful');
             })
