@@ -2,12 +2,12 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/pomodoro-app/icons/icon-192x192.png" />
+    <link rel="icon" type="image/png" href="/Pomodoro_app/icons/icon-192x192.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1976d2" />
     <meta name="description" content="A modern Pomodoro Timer app for productivity" />
-    <link rel="apple-touch-icon" href="/pomodoro-app/icons/icon-192x192.png" />
-    <link rel="manifest" href="/pomodoro-app/manifest.json" />
+    <link rel="apple-touch-icon" href="/Pomodoro_app/icons/icon-192x192.png" />
+    <link rel="manifest" href="/Pomodoro_app/manifest.json" />
     <title>Pomodoro Timer</title>
   </head>
   <body>
@@ -16,7 +16,7 @@
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/pomodoro-app/sw.js')
+          navigator.serviceWorker.register('/Pomodoro_app/sw.js')
             .then(registration => {
               console.log('ServiceWorker registration successful');
             })
